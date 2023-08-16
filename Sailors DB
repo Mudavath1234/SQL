@@ -1,0 +1,1350 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| B192476            |
+| DBMS               |
+| DBMS_lab2          |
+| Department         |
+| Employee           |
+| Students           |
+| Uday               |
+| db                 |
+| dbms_lab3          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+13 rows in set (0.13 sec)
+
+mysql> use DBMS;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_DBMS |
++----------------+
+| Boats          |
+| Reserves       |
+| customer       |
+| department     |
+| invoices       |
+| sailors        |
+| supplier       |
++----------------+
+7 rows in set (0.00 sec)
+
+mysql> drop table customer;
+Query OK, 0 rows affected (0.92 sec)
+
+mysql> drop table department;
+Query OK, 0 rows affected (0.78 sec)
+
+mysql> drop table invoices;
+Query OK, 0 rows affected (0.72 sec)
+
+mysql> drop table supplier;
+Query OK, 0 rows affected (0.58 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_DBMS |
++----------------+
+| Boats          |
+| Reserves       |
+| sailors        |
++----------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from sailors;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  22 | Dustin  |      7 |   45 |
+|  29 | Brutus  |      1 |   33 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  64 | Horatio |      7 |   35 |
+|  71 | Zobra   |     10 |   16 |
+|  74 | Horatio |      9 |   35 |
+|  85 | Art     |      3 | 25.5 |
+|  95 | Bob     |      3 | 63.5 |
++-----+---------+--------+------+
+10 rows in set (0.05 sec)
+
+mysql> select avg(age) AGE,sum(age) SUM,min(age) MIN,max(age) MAX,count(distinct age) COUNT from sailors;
++------+------+------+------+-------+
+| AGE  | SUM  | MIN  | MAX  | COUNT |
++------+------+------+------+-------+
+| 36.9 |  369 |   16 | 63.5 |     7 |
++------+------+------+------+-------+
+1 row in set (0.46 sec)
+
+mysql> select avg(age) AGE,sum(age) SUM,min(age) MIN,max(age) MAX,count(age) COUNT from sailors;
++------+------+------+------+-------+
+| AGE  | SUM  | MIN  | MAX  | COUNT |
++------+------+------+------+-------+
+| 36.9 |  369 |   16 | 63.5 |    10 |
++------+------+------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select *from sailors where age>=35;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  22 | Dustin  |      7 |   45 |
+|  31 | Lubber  |      8 | 55.5 |
+|  58 | Rusty   |     10 |   35 |
+|  64 | Horatio |      7 |   35 |
+|  74 | Horatio |      9 |   35 |
+|  95 | Bob     |      3 | 63.5 |
++-----+---------+--------+------+
+6 rows in set (0.00 sec)
+
+mysql> select *from sailors where age<>35;
++-----+--------+--------+------+
+| sid | sname  | rating | age  |
++-----+--------+--------+------+
+|  22 | Dustin |      7 |   45 |
+|  29 | Brutus |      1 |   33 |
+|  31 | Lubber |      8 | 55.5 |
+|  32 | Andy   |      8 | 25.5 |
+|  71 | Zobra  |     10 |   16 |
+|  85 | Art    |      3 | 25.5 |
+|  95 | Bob    |      3 | 63.5 |
++-----+--------+--------+------+
+7 rows in set (0.00 sec)
+
+mysql> select count(distinct sname) COUNT from sailors;
++-------+
+| COUNT |
++-------+
+|     9 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select *from sailors;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  22 | Dustin  |      7 |   45 |
+|  29 | Brutus  |      1 |   33 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  64 | Horatio |      7 |   35 |
+|  71 | Zobra   |     10 |   16 |
+|  74 | Horatio |      9 |   35 |
+|  85 | Art     |      3 | 25.5 |
+|  95 | Bob     |      3 | 63.5 |
++-----+---------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> select *from sailors where sname like "b%";
++-----+--------+--------+------+
+| sid | sname  | rating | age  |
++-----+--------+--------+------+
+|  29 | Brutus |      1 |   33 |
+|  95 | Bob    |      3 | 63.5 |
++-----+--------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select *from sailors where sname like "%b";
++-----+-------+--------+------+
+| sid | sname | rating | age  |
++-----+-------+--------+------+
+|  95 | Bob   |      3 | 63.5 |
++-----+-------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> select *from sailors where sname like "%ratio%";
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  64 | Horatio |      7 |   35 |
+|  74 | Horatio |      9 |   35 |
++-----+---------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select *from sailors where sname like 'b__%';
++-----+--------+--------+------+
+| sid | sname  | rating | age  |
++-----+--------+--------+------+
+|  29 | Brutus |      1 |   33 |
+|  95 | Bob    |      3 | 63.5 |
++-----+--------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select *from sailors where sname like 'b%o';
+Empty set (0.00 sec)
+
+mysql> select *from sailors where sname like 'b%b';
++-----+-------+--------+------+
+| sid | sname | rating | age  |
++-----+-------+--------+------+
+|  95 | Bob   |      3 | 63.5 |
++-----+-------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> select *from sailors s join Reserves r on s.sid=r.sid;
++-----+---------+--------+------+-----+-----+------------+
+| sid | sname   | rating | age  | sid | bid | Day        |
++-----+---------+--------+------+-----+-----+------------+
+|  22 | Dustin  |      7 |   45 |  22 | 101 | 1998-10-10 |
+|  22 | Dustin  |      7 |   45 |  22 | 102 | 1998-10-10 |
+|  22 | Dustin  |      7 |   45 |  22 | 103 | 1998-08-10 |
+|  22 | Dustin  |      7 |   45 |  22 | 104 | 1998-07-10 |
+|  31 | Lubber  |      8 | 55.5 |  31 | 102 | 1998-10-11 |
+|  31 | Lubber  |      8 | 55.5 |  31 | 103 | 1998-06-11 |
+|  31 | Lubber  |      8 | 55.5 |  31 | 104 | 1998-12-11 |
+|  64 | Horatio |      7 |   35 |  64 | 101 | 1998-05-09 |
+|  64 | Horatio |      7 |   35 |  64 | 102 | 1998-08-09 |
+|  74 | Horatio |      9 |   35 |  74 | 103 | 1998-08-09 |
++-----+---------+--------+------+-----+-----+------------+
+10 rows in set (0.04 sec)
+
+mysql> select count(distinct sid) COUNT from Reserveas;
+ERROR 1146 (42S02): Table 'DBMS.Reserveas' doesn't exist
+mysql> select count(distinct sid) COUNT from Reserves;
++-------+
+| COUNT |
++-------+
+|     4 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select *from sailors where sid in(select sid from Reserves);
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  22 | Dustin  |      7 |   45 |
+|  31 | Lubber  |      8 | 55.5 |
+|  64 | Horatio |      7 |   35 |
+|  74 | Horatio |      9 |   35 |
++-----+---------+--------+------+
+4 rows in set (0.05 sec)
+
+mysql> select *from Reserves;
++-----+-----+------------+
+| sid | bid | Day        |
++-----+-----+------------+
+|  22 | 101 | 1998-10-10 |
+|  22 | 102 | 1998-10-10 |
+|  22 | 103 | 1998-08-10 |
+|  22 | 104 | 1998-07-10 |
+|  31 | 102 | 1998-10-11 |
+|  31 | 103 | 1998-06-11 |
+|  31 | 104 | 1998-12-11 |
+|  64 | 101 | 1998-05-09 |
+|  64 | 102 | 1998-08-09 |
+|  74 | 103 | 1998-08-09 |
++-----+-----+------------+
+10 rows in set (0.00 sec)
+
+mysql> select *from sailo.rs;
+ERROR 1049 (42000): Unknown database 'sailo'
+mysql> select *from sailors;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  22 | Dustin  |      7 |   45 |
+|  29 | Brutus  |      1 |   33 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  64 | Horatio |      7 |   35 |
+|  71 | Zobra   |     10 |   16 |
+|  74 | Horatio |      9 |   35 |
+|  85 | Art     |      3 | 25.5 |
+|  95 | Bob     |      3 | 63.5 |
++-----+---------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> select sname from sailors where rating>7;
++---------+
+| sname   |
++---------+
+| Lubber  |
+| Andy    |
+| Rusty   |
+| Zobra   |
+| Horatio |
++---------+
+5 rows in set (0.00 sec)
+
+mysql> select *from Boats;
++-----+-----------+-------+
+| bid | bname     | color |
++-----+-----------+-------+
+| 101 | Interlake | Blue  |
+| 102 | Interlake | Red   |
+| 103 | Clipper   | Green |
+| 104 | Marine    | Red   |
++-----+-----------+-------+
+4 rows in set (0.06 sec)
+
+mysql> select bname from Boats where color='red';
++-----------+
+| bname     |
++-----------+
+| Interlake |
+| Marine    |
++-----------+
+2 rows in set (0.00 sec)
+
+mysql> select *from sail.ors;
+ERROR 1049 (42000): Unknown database 'sail'
+mysql> select *from sailors;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  22 | Dustin  |      7 |   45 |
+|  29 | Brutus  |      1 |   33 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  64 | Horatio |      7 |   35 |
+|  71 | Zobra   |     10 |   16 |
+|  74 | Horatio |      9 |   35 |
+|  85 | Art     |      3 | 25.5 |
+|  95 | Bob     |      3 | 63.5 |
++-----+---------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> select *from sailors where rating>(select max(rating) from sailors where
+sname="Horatio");
++-----+-------+--------+------+
+| sid | sname | rating | age  |
++-----+-------+--------+------+
+|  58 | Rusty |     10 |   35 |
+|  71 | Zobra |     10 |   16 |
++-----+-------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select *from sailors where rating>(select rating from sailors where sname="Horatio");
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select *from sailors where rating>any(select rating from sailors where sname="Horatio");
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  71 | Zobra   |     10 |   16 |
+|  74 | Horatio |      9 |   35 |
++-----+---------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> select sname from sailors s join Reserves r on s.sid=r.sid and r.bid=101; 
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Horatio |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select r.bid from Reserves r join Boats b on r.bid=b.bid and b.color='Red';
++-----+
+| bid |
++-----+
+| 102 |
+| 102 |
+| 102 |
+| 104 |
+| 104 |
++-----+
+5 rows in set (0.00 sec)
+
+mysql> select r.sid from Reserves r join Boats b on r.bid=b.bid and b.color='Red';
++-----+
+| sid |
++-----+
+|  22 |
+|  31 |
+|  64 |
+|  22 |
+|  31 |
++-----+
+5 rows in set (0.00 sec)
+
+mysql> select sname from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='Red';
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Lubber  |
+| Horatio |
+| Dustin  |
+| Lubber  |
++---------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct sname from sailors s join Reserves r on s.sid=r.sid join
+Boats b on r.bid=b.bid and b.color='Red';
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Lubber  |
+| Horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select rating from sailors where age between 50 and 60;
++--------+
+| rating |
++--------+
+|      8 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select rating from sailors where age not between 50 and 60;
++--------+
+| rating |
++--------+
+|      7 |
+|      1 |
+|      8 |
+|     10 |
+|      7 |
+|     10 |
+|      9 |
+|      3 |
+|      3 |
++--------+
+9 rows in set (0.00 sec)
+
+mysql> select distinct sname from sailors s join Reserves r on s.sid=r.sid;
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Horatio |
+| Lubber  |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct sname from sailors s join Reserves r on s.sid=r.sid;
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Horatio |
+| Lubber  |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> 
+mysql> select *from sailors order by sname;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  32 | Andy    |      8 | 25.5 |
+|  85 | Art     |      3 | 25.5 |
+|  95 | Bob     |      3 | 63.5 |
+|  29 | Brutus  |      1 |   33 |
+|  22 | Dustin  |      7 |   45 |
+|  64 | Horatio |      7 |   35 |
+|  74 | Horatio |      9 |   35 |
+|  31 | Lubber  |      8 | 55.5 |
+|  58 | Rusty   |     10 |   35 |
+|  71 | Zobra   |     10 |   16 |
++-----+---------+--------+------+
+10 rows in set (0.01 sec)
+
+mysql> select *from sailors;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  22 | Dustin  |      7 |   45 |
+|  29 | Brutus  |      1 |   33 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  64 | Horatio |      7 |   35 |
+|  71 | Zobra   |     10 |   16 |
+|  74 | Horatio |      9 |   35 |
+|  85 | Art     |      3 | 25.5 |
+|  95 | Bob     |      3 | 63.5 |
++-----+---------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> select *from sailors order by sname DESC;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  71 | Zobra   |     10 |   16 |
+|  58 | Rusty   |     10 |   35 |
+|  31 | Lubber  |      8 | 55.5 |
+|  64 | Horatio |      7 |   35 |
+|  74 | Horatio |      9 |   35 |
+|  22 | Dustin  |      7 |   45 |
+|  29 | Brutus  |      1 |   33 |
+|  95 | Bob     |      3 | 63.5 |
+|  85 | Art     |      3 | 25.5 |
+|  32 | Andy    |      8 | 25.5 |
++-----+---------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> select *from sailors limit 0,5
+    -> ;
++-----+--------+--------+------+
+| sid | sname  | rating | age  |
++-----+--------+--------+------+
+|  22 | Dustin |      7 |   45 |
+|  29 | Brutus |      1 |   33 |
+|  31 | Lubber |      8 | 55.5 |
+|  32 | Andy   |      8 | 25.5 |
+|  58 | Rusty  |     10 |   35 |
++-----+--------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> select *from sailors limit 0,6;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  22 | Dustin  |      7 |   45 |
+|  29 | Brutus  |      1 |   33 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  64 | Horatio |      7 |   35 |
++-----+---------+--------+------+
+6 rows in set (0.00 sec)
+
+mysql> select *from sailors limit 1,6;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  29 | Brutus  |      1 |   33 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  64 | Horatio |      7 |   35 |
+|  71 | Zobra   |     10 |   16 |
++-----+---------+--------+------+
+6 rows in set (0.00 sec)
+
+mysql> select *from sailors;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  22 | Dustin  |      7 |   45 |
+|  29 | Brutus  |      1 |   33 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  64 | Horatio |      7 |   35 |
+|  71 | Zobra   |     10 |   16 |
+|  74 | Horatio |      9 |   35 |
+|  85 | Art     |      3 | 25.5 |
+|  95 | Bob     |      3 | 63.5 |
++-----+---------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> select *from sailors limit 0,1;
++-----+--------+--------+------+
+| sid | sname  | rating | age  |
++-----+--------+--------+------+
+|  22 | Dustin |      7 |   45 |
++-----+--------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> select *from sailors limit 0,2;
++-----+--------+--------+------+
+| sid | sname  | rating | age  |
++-----+--------+--------+------+
+|  22 | Dustin |      7 |   45 |
+|  29 | Brutus |      1 |   33 |
++-----+--------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select *from sailors limit 2,2;
++-----+--------+--------+------+
+| sid | sname  | rating | age  |
++-----+--------+--------+------+
+|  31 | Lubber |      8 | 55.5 |
+|  32 | Andy   |      8 | 25.5 |
++-----+--------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select *from sailors limit 10,10;
+Empty set (0.00 sec)
+
+mysql> select sname from sailors s join Reserves r on s.sid=r.sid and r.bid=101;
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Horatio |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select sname,Day from sailors s join Reserves r on s.sid=r.sid and r.bid=101;
++---------+------------+
+| sname   | Day        |
++---------+------------+
+| Dustin  | 1998-10-10 |
+| Horatio | 1998-05-09 |
++---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select s.sname,b.color from sailors s join Reserves r on s.sid=r.sid join Boats b on b.bid=r.bid and s.sname='Lubber';
++--------+-------+
+| sname  | color |
++--------+-------+
+| Lubber | Red   |
+| Lubber | Green |
+| Lubber | Red   |
++--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select *from sailors where rating in(select max(rating) from sailors);
++-----+-------+--------+------+
+| sid | sname | rating | age  |
++-----+-------+--------+------+
+|  58 | Rusty |     10 |   35 |
+|  71 | Zobra |     10 |   16 |
++-----+-------+--------+------+
+2 rows in set (0.06 sec)
+
+mysql> select *from sailors where age in(select max(age) from sailors);
++-----+-------+--------+------+
+| sid | sname | rating | age  |
++-----+-------+--------+------+
+|  95 | Bob   |      3 | 63.5 |
++-----+-------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> select *from sailors where age in(select min(age) from sailors);
++-----+-------+--------+------+
+| sid | sname | rating | age  |
++-----+-------+--------+------+
+|  71 | Zobra |     10 |   16 |
++-----+-------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> select count(bid) from Boats;
++------------+
+| count(bid) |
++------------+
+|          4 |
++------------+
+1 row in set (0.06 sec)
+
+mysql> select count(sid) from Reserves group by sid having sid=22;
++------------+
+| count(sid) |
++------------+
+|          4 |
++------------+
+1 row in set (0.36 sec)
+
+mysql> select *from sailors where age<60 or rating>8;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  22 | Dustin  |      7 |   45 |
+|  29 | Brutus  |      1 |   33 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  64 | Horatio |      7 |   35 |
+|  71 | Zobra   |     10 |   16 |
+|  74 | Horatio |      9 |   35 |
+|  85 | Art     |      3 | 25.5 |
++-----+---------+--------+------+
+9 rows in set (0.00 sec)
+
+mysql> select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='green';
++-----+
+| sid |
++-----+
+|  22 |
+|  31 |
+|  74 |
++-----+
+3 rows in set (0.00 sec)
+
+mysql> select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='green' or b.color='red';
++-----+
+| sid |
++-----+
+|  22 |
+|  22 |
+|  64 |
+|  64 |
+|  22 |
+|  22 |
+|  31 |
+|  31 |
+|  64 |
+|  64 |
+|  22 |
+|  22 |
+|  22 |
+|  31 |
+|  31 |
+|  31 |
+|  74 |
+|  74 |
+|  74 |
+|  22 |
+|  22 |
+|  31 |
+|  31 |
++-----+
+23 rows in set (0.37 sec)
+
+mysql> select distinct s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bi
+d=b.bid and b.color='green' or b.color='red';
++-----+
+| sid |
++-----+
+|  22 |
+|  64 |
+|  31 |
+|  74 |
++-----+
+4 rows in set (0.00 sec)
+
+mysql> select bname from Boats where color<>'Blue';
++-----------+
+| bname     |
++-----------+
+| Interlake |
+| Clipper   |
+| Marine    |
++-----------+
+3 rows in set (0.00 sec)
+
+mysql> select s.sname from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color<>'Blue';
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Lubber  |
+| Horatio |
+| Dustin  |
+| Lubber  |
+| Horatio |
+| Dustin  |
+| Lubber  |
++---------+
+8 rows in set (0.01 sec)
+
+mysql> select distinct s.sname from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color<>'Blue';
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Lubber  |
+| Horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select sid from Reserves group by sid having count(sid>=3);
++-----+
+| sid |
++-----+
+|  22 |
+|  31 |
+|  64 |
+|  74 |
++-----+
+4 rows in set (0.00 sec)
+
+mysql> select sid from Reserves group by sid having count(sid>3);
++-----+
+| sid |
++-----+
+|  22 |
+|  31 |
+|  64 |
+|  74 |
++-----+
+4 rows in set (0.00 sec)
+
+mysql> select sid from Reserves group by sid;
++-----+
+| sid |
++-----+
+|  22 |
+|  31 |
+|  64 |
+|  74 |
++-----+
+4 rows in set (0.00 sec)
+
+mysql> select count(sid),sid from Reserves group by sid;
++------------+-----+
+| count(sid) | sid |
++------------+-----+
+|          4 |  22 |
+|          3 |  31 |
+|          2 |  64 |
+|          1 |  74 |
++------------+-----+
+4 rows in set (0.00 sec)
+
+mysql> select count(sid),sid from Reserves group by sid having count(sid)>3;
++------------+-----+
+| count(sid) | sid |
++------------+-----+
+|          4 |  22 |
++------------+-----+
+1 row in set (0.00 sec)
+
+mysql> select count(sid),sid from Reserves group by sid having count(sid)>=3;
++------------+-----+
+| count(sid) | sid |
++------------+-----+
+|          4 |  22 |
+|          3 |  31 |
++------------+-----+
+2 rows in set (0.00 sec)
+
+mysql> select rating,age from sailors where name like "b%";
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> select rating,age from sailors where sname like "b%";
++--------+------+
+| rating | age  |
++--------+------+
+|      1 |   33 |
+|      3 | 63.5 |
++--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select *from sailors order by rating;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  29 | Brutus  |      1 |   33 |
+|  85 | Art     |      3 | 25.5 |
+|  95 | Bob     |      3 | 63.5 |
+|  22 | Dustin  |      7 |   45 |
+|  64 | Horatio |      7 |   35 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  74 | Horatio |      9 |   35 |
+|  58 | Rusty   |     10 |   35 |
+|  71 | Zobra   |     10 |   16 |
++-----+---------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> select *from sailors order by rating desc;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  58 | Rusty   |     10 |   35 |
+|  71 | Zobra   |     10 |   16 |
+|  74 | Horatio |      9 |   35 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  22 | Dustin  |      7 |   45 |
+|  64 | Horatio |      7 |   35 |
+|  85 | Art     |      3 | 25.5 |
+|  95 | Bob     |      3 | 63.5 |
+|  29 | Brutus  |      1 |   33 |
++-----+---------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> select *from sailors order by rating desc limit 2,3;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  74 | Horatio |      9 |   35 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
++-----+---------+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> select *from sailors order by rating desc limit 2,2;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  74 | Horatio |      9 |   35 |
+|  31 | Lubber  |      8 | 55.5 |
++-----+---------+--------+------+
+2 rows in set (0.00 sec)
+mysql> select sid from Reserves group by sid having count(sid)=(select count(bid) from Boats);
++-----+
+| sid |
++-----+
+|  22 |
++-----+
+1 row in set (0.00 sec)
+
+mysql> select r.sid from Reserves r group by r.sid having count(r.sid)=(select count(bid) from
+Boats);
++-----+
+| sid |
++-----+
+|  22 |
++-----+
+1 row in set (0.00 sec)
+
+mysql> select r.sid,s.sname from sailors s join  Reserves r group by r.sid having count(r.sid)=
+(select count(bid) from Boats);
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'DBMS.s.sname' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select sname from sailors where sid in(select r.sid from Reserves r group by r.sid havin
+g count(r.sid))=(select count(bid) from Boats);
+Empty set (0.00 sec)
+
+mysql> select s.sname from sailors s join Reserves r on s.sid=r.sid group by r.sid having count(r.sid)=select count(bid) from Boats;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select count(bid) from Boats' at line 1
+mysql> select s.sname from sailors s join Reserves r on s.sid=r.sid group by r.sid having count(r.sid)=(select count(bid) from Boats);
++--------+
+| sname  |
++--------+
+| Dustin |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select sname from sailors order by sname Desc;
++---------+
+| sname   |
++---------+
+| Zobra   |
+| Rusty   |
+| Lubber  |
+| Horatio |
+| Horatio |
+| Dustin  |
+| Brutus  |
+| Bob     |
+| Art     |
+| Andy    |
++---------+
+10 rows in set (0.00 sec)
+
+mysql> select sname from sailors order by sname;
++---------+
+| sname   |
++---------+
+| Andy    |
+| Art     |
+| Bob     |
+| Brutus  |
+| Dustin  |
+| Horatio |
+| Horatio |
+| Lubber  |
+| Rusty   |
+| Zobra   |
++---------+
+10 rows in set (0.00 sec)
+
+mysql> select *from sailors where rating>5;
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  22 | Dustin  |      7 |   45 |
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  64 | Horatio |      7 |   35 |
+|  71 | Zobra   |     10 |   16 |
+|  74 | Horatio |      9 |   35 |
++-----+---------+--------+------+
+7 rows in set (0.01 sec)
+
+mysql> select sname from sailors s join Reserves r on s.sid=r.sid and r.bid=102;
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Lubber  |
+| Horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select day,count(bid) from Reserves group by day;
++------------+------------+
+| day        | count(bid) |
++------------+------------+
+| 1998-10-10 |          2 |
+| 1998-08-10 |          1 |
+| 1998-07-10 |          1 |
+| 1998-10-11 |          1 |
+| 1998-06-11 |          1 |
+| 1998-12-11 |          1 |
+| 1998-05-09 |          1 |
+| 1998-08-09 |          2 |
++------------+------------+
+8 rows in set (0.05 sec)
+
+mysql> select r.sid,s.sname,count(r.sid) from sailors s join Reserves r on s.sid=r.sid group by r.sid ;
++-----+---------+--------------+
+| sid | sname   | count(r.sid) |
++-----+---------+--------------+
+|  22 | Dustin  |            4 |
+|  31 | Lubber  |            3 |
+|  64 | Horatio |            2 |
+|  74 | Horatio |            1 |
++-----+---------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select r.sid,s.sname,count(r.sid) from sailors s join Reserves r on s.sid=r.sid group by r.sid order by count(bid) DESC;
++-----+---------+--------------+
+| sid | sname   | count(r.sid) |
++-----+---------+--------------+
+|  22 | Dustin  |            4 |
+|  31 | Lubber  |            3 |
+|  64 | Horatio |            2 |
+|  74 | Horatio |            1 |
++-----+---------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select r.sid,count(r.sid) from sailors s join Reserves r on s.sid=r.sid group by r.sid order by count(bid) DESC;
++-----+--------------+
+| sid | count(r.sid) |
++-----+--------------+
+|  22 |            4 |
+|  31 |            3 |
+|  64 |            2 |
+|  74 |            1 |
++-----+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select b.color,count(r.bid) from Reserves r join Boats b on r.bid=b.bid group by color;
++-------+--------------+
+| color | count(r.bid) |
++-------+--------------+
+| Blue  |            2 |
+| Red   |            5 |
+| Green |            3 |
++-------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select sname from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=bid and b.color='Red';
+ERROR 1052 (23000): Column 'bid' in on clause is ambiguous
+mysql> select sname from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='Red';
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Lubber  |
+| Horatio |
+| Dustin  |
+| Lubber  |
++---------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct sname from sailors s join Reserves r on s.sid=r.sid join Boa
+ts b on r.bid=b.bid and b.color='Red';
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Lubber  |
+| Horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select sname from sailors where sname like "%__b";
++-------+
+| sname |
++-------+
+| Bob   |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select sname,age from sailors where sname like "%__b";
++-------+------+
+| sname | age  |
++-------+------+
+| Bob   | 63.5 |
++-------+------+
+1 row in set (0.00 sec)
+
+mysql> select max(rating) from sailors;
++-------------+
+| max(rating) |
++-------------+
+|          10 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select sname from sailors where sid in(select max(rating) from sailors);
+Empty set (0.00 sec)
+
+mysql> select sname from sailors where sid in(select sid,max(rating) from sailors);
+
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select sname from sailors where rating in(select max(rating) from sailors);
++-------+
+| sname |
++-------+
+| Rusty |
+| Zobra |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select avg(rating) AVG from sailors where age between 20 to 35;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to 35' at line 1
+mysql> select avg(rating) AVG from sailors where age between 20-35;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select avg(rating) AVG from sailors where age between 20 35;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '35' at line 1
+mysql> select avg(rating) AVG from sailors where age between 20,35;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',35' at line 1
+mysql> select avg(rating) AVG from sailors where age between 20 and 35;
++-------------------+
+| AVG               |
++-------------------+
+| 6.333333333333333 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select b.bid,count(r.sid) from Reserves r join Boats b on r.bid=b.bid group
+by b.bid;
++-----+--------------+
+| bid | count(r.sid) |
++-----+--------------+
+| 101 |            2 |
+| 102 |            3 |
+| 103 |            3 |
+| 104 |            2 |
++-----+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select age from sailors where rating=7;
++------+
+| age  |
++------+
+|   45 |
+|   35 |
++------+
+2 rows in set (0.01 sec)
+
+mysql> select min(age) from sailors where rating=7;
++----------+
+| min(age) |
++----------+
+|       35 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select sname from sailors where age<(select min(age) from sailors where rati
+ng=7);
++--------+
+| sname  |
++--------+
+| Brutus |
+| Andy   |
+| Zobra  |
+| Art    |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> select sname,age from sailors where age<(select min(age) from sailors where
+rating=7);
++--------+------+
+| sname  | age  |
++--------+------+
+| Brutus |   33 |
+| Andy   | 25.5 |
+| Zobra  |   16 |
+| Art    | 25.5 |
++--------+------+
+4 rows in set (0.00 sec)
+
+mysql> select sname,age from sailors where age<any(select age from sailors where rating=7);
++---------+------+
+| sname   | age  |
++---------+------+
+| Brutus  |   33 |
+| Andy    | 25.5 |
+| Rusty   |   35 |
+| Horatio |   35 |
+| Zobra   |   16 |
+| Horatio |   35 |
+| Art     | 25.5 |
++---------+------+
+7 rows in set (0.00 sec)
+
+mysql> select *from sailors where rating>any(select rating from sailors where sname='Horatio');
++-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|  31 | Lubber  |      8 | 55.5 |
+|  32 | Andy    |      8 | 25.5 |
+|  58 | Rusty   |     10 |   35 |
+|  71 | Zobra   |     10 |   16 |
+|  74 | Horatio |      9 |   35 |
++-----+---------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> select rating,max(age) from sailors group by rating;
++--------+----------+
+| rating | max(age) |
++--------+----------+
+|      7 |       45 |
+|      1 |       33 |
+|      8 |     55.5 |
+|     10 |       35 |
+|      9 |       35 |
+|      3 |     63.5 |
++--------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select sname from sailors s join Reserves r on s.sid=r.sid and r.bid=103;
++---------+
+| sname   |
++---------+
+| Dustin  |
+| Lubber  |
+| Horatio |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select r.sid from Reserves r group by r.sid having count(r.sid)=(select count(bid) from Boats);
++-----+
+| sid |
++-----+
+|  22 |
++-----+
+1 row in set (0.00 sec)
+
+mysql> select sname from sailors where sid in(select r.sid from Reserves r group by
+ r.sid having count(r.sid)=(select count(bid) from Boats));
++--------+
+| sname  |
++--------+
+| Dustin |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='Red';
++-----+
+| sid |
++-----+
+|  22 |
+|  31 |
+|  64 |
+|  22 |
+|  31 |
++-----+
+5 rows in set (0.00 sec)
+
+mysql> (select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on
+r.bid=b.bid and b.color='Red') except select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='Red';
+Empty set (0.02 sec)
+
+mysql> (select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on
+r.bid=b.bid and b.color='Red') except select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='Red';            
+
+^C
+mysql> (select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on
+r.bid=b.bid and b.color='Red') except (select s.sid from sailors s join Reserves r
+on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='Red');
+Empty set (0.00 sec)
+
+mysql> (select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on
+r.bid=b.bid and b.color='Red') except (select s.sid from sailors s join Reserves r
+on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='green');
++-----+
+| sid |
++-----+
+|  64 |
++-----+
+1 row in set (0.00 sec)
+
+mysql> (select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on
+r.bid=b.bid and b.color='Red') except (select s.sid from sailors s join Reserves r
+on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='green');
++-----+
+| sid |
++-----+
+|  64 |
++-----+
+1 row in set (0.01 sec)
+
+mysql> (select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on
+r.bid=b.bid and b.color='Red') union (select s.sid from sailors s join Reserves r o
+n s.sid=r.sid join Boats b on r.bid=b.bid and b.color='green');
++-----+
+| sid |
++-----+
+|  22 |
+|  31 |
+|  64 |
+|  74 |
++-----+
+4 rows in set (0.00 sec)
+
+mysql> (select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on
+r.bid=b.bid and b.color='Red')intersect(select s.sid from sailors s join Reserves r
+ on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='green');
++-----+
+| sid |
++-----+
+|  22 |
+|  31 |
++-----+
+2 rows in set (0.00 sec)
+
+mysql> select sname from sailors where sid in((select s.sid from sailors s join Res
+erves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='Red')intersect(sele
+ct s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid
+and b.color='green'));
++--------+
+| sname  |
++--------+
+| Dustin |
+| Lubber |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> select sid,sname from sailors where sid in((select s.sid from sailors s join
+ Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='Red')intersect(select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.
+bid and b.color='green'));
++-----+--------+
+| sid | sname  |
++-----+--------+
+|  22 | Dustin |
+|  31 | Lubber |
++-----+--------+
+2 rows in set (0.00 sec)
+
+mysql> select sid,sname from sailors where sid in((select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='Red')union(sele
+ct s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid
+and b.color='green'));
++-----+---------+
+| sid | sname   |
++-----+---------+
+|  22 | Dustin  |
+|  31 | Lubber  |
+|  64 | Horatio |
+|  74 | Horatio |
++-----+---------+
+4 rows in set (0.00 sec)
+
+mysql> select sid,sname from sailors where sid in((select s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='Red')except(sel
+ect s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid
+ and b.color='green'));
++-----+---------+
+| sid | sname   |
++-----+---------+
+|  64 | Horatio |
++-----+---------+
+1 row in set (0.01 sec)
+
+mysql> select *from sailors where sname like "b%_b";
++-----+-------+--------+------+
+| sid | sname | rating | age  |
++-----+-------+--------+------+
+|  95 | Bob   |      3 | 63.5 |
++-----+-------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> DDselect s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.bid=b.bid and b.color='Red';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DDselect s.sid from sailors s join Reserves r on s.sid=r.sid join Boats b on r.b' at line 1
+mysql> 
+
